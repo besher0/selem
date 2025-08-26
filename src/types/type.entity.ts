@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Type } from 'src/types/type.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Menu } from '../menu/menu.entity';
 
-@Entity('menu')
-export class Menu {
+@Entity('types')
+export class Type {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,7 +22,7 @@ export class Menu {
   @Column({ type: 'text', nullable: true })
   description2: string;
 
-    @ManyToOne(() => Type, (type) => type.menus, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'type_id' })
-  type: Type;
+  // العلاقة مع الـ Menu (واحد إلى متعدد)
+  @OneToMany(() => Menu, (menu) => menu.type)
+  menus: Menu[];
 }
